@@ -1,0 +1,8 @@
+Start bash.exe in administrator mode
+type : sudo apt-get install lamp-server^
+add these 2 lines in /etc/apache2/apache2.conf :
+Servername localhost
+
+AcceptFilter http none
+
+then you can start apache : /etc/init.d/apache2 start
