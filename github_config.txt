@@ -1,0 +1,21 @@
+#install git
+sudo apt-get install git
+
+#add username
+git config --global user.name "gitname"
+git config --global user.email "da@mail.com"
+
+#clone to my com
+git clone https://github.com/sakdahomhuan/da-Openlayers
+
+#check status
+git status
+
+#add file to track
+git add "filename" 	#for single file
+git add -A 		#for all file
+
+#commit
+git commit -m "add commend"
+
+git push -u origin master

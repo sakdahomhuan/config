@@ -1,8 +1,56 @@
-Start bash.exe in administrator mode
-type : sudo apt-get install lamp-server^
-add these 2 lines in /etc/apache2/apache2.conf :
-Servername localhost
+source: https://www.linode.com/docs/websites/lamp/install-lamp-on-ubuntu-16-04
 
-AcceptFilter http none
+sudo apt-get update && sudo apt-get upgrade
 
-then you can start apache : /etc/init.d/apache2 start
+
+#Install Apache 2.4 from the Ubuntu repository:
+sudo apt-get install apache2
+
+#Edit the main Apache configuration file, apache2.conf, to adjust the KeepAlive setting:
+#/etc/apache2/apache2.conf
+KeepAlive Off
+
+#/etc/apache2/mods-available/mpm_prefork.conf
+<IfModule mpm_prefork_module>
+        StartServers            4
+        MinSpareServers         20
+        MaxSpareServers         40
+        MaxRequestWorkers       200
+        MaxConnectionsPerChild  4500
+</IfModule>
+
+#Disable the event module and enable prefork:
+sudo a2dismod mpm_event
+sudo a2enmod mpm_prefork
+
+#restart apache
+sudo service apache2 restart
+
+#Install the mysql-server package and choose a secure password when prompted:
+sudo apt-get install mysql-server
+
+#Install PHP, the PHP Extension and Application Repository, Apache support, and MySQL support:
+sudo apt-get install php7.0 php-pear libapache2-mod-php7.0 php7.0-mysql
+sudo apt-get install php7.0-curl php7.0-json php7.0-cgi
+
+#/etc/php/7.0/apache2/php.ini
+max_input_time = 30
+error_reporting = E_COMPILE_ERROR | E_RECOVERABLE_ERROR | E_ERROR | E_CORE_ERROR
+error_log = /var/log/php/error.log
+
+#Create the log directory for PHP and give ownership to the Apache system user:
+sudo mkdir /var/log/php
+sudo chown www-data /var/log/php
+
+#restart apache
+sudo service apache2 restart
+
+#change web root
+sudo nano /etc/apache2/sites-available/000-default.conf
+
+#change the following line to what you want:
+
+DocumentRoot /var/www/html
+
+
+
