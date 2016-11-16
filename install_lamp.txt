@@ -53,4 +53,13 @@ sudo nano /etc/apache2/sites-available/000-default.conf
 DocumentRoot /var/www/html
 
 
+#install tomcat8
+apt-get install tomcat8
+apt-get install tomcat8-docs tomcat8-examples tomcat8-admin
 
+#/var/lib/tomcat8/conf/tomcat-users.xml
+<role rolename="manager-gui"/>
+<role rolename="admin-gui"/>
+<user username="username" password="password" roles="manager-gui,admin-gui"/>
+
+sudo service tomcat8 restart
